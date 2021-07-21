@@ -32,6 +32,7 @@ const createNotes = () => {
     updatedAt: timestamp,
   });
   saveNotes(notes);
+  return id;
 };
 
 // Remove note by it UUID
@@ -99,6 +100,7 @@ const updateNote = (id, updates) => {
   }
 
   saveNotes(notes);
+  return note;
 };
 
 notes = loadNotes();

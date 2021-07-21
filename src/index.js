@@ -1,17 +1,30 @@
-import { getNotes, createNotes, removeNote, updateNote } from "./notes";
-import { getFilters, setFilters } from "./filters";
+import { createNotes } from "./notes";
+import { setFilters } from "./filters";
+import { renderNotes } from "./view";
 
-// console.log(getNotes());
-// createNotes();
-// updateNote("69d05b37-9fb1-4441-a552-fd10e17f6080", {
-//   title: "this is my title",
-//   body: "this is my body",
-// });
-// console.log(getNotes());
+renderNotes();
 
-console.log(getFilters());
-setFilters({
-  searchText: "Office",
-  sortBy: "byCreated",
+document.querySelector("#create-note").addEventListener("click", (e) => {
+  const id = createNotes();
+  location.assign(`/edit.html#${id}`);
 });
-console.log(getFilters());
+
+document.querySelector("#search-text").addEventListener("input", (e) => {
+  setFilters({
+    searchText: e.target.value,
+  });
+  renderNotes();
+});
+
+document.querySelector("#filter-by").addEventListener("change", (e) => {
+  setFilters({
+    sortBy: e.target.value,
+  });
+  renderNotes();
+});
+
+window.addEventListener("storage", (e) => {
+  if (e.key === "notes") {
+    renderNotes();
+  }
+});
